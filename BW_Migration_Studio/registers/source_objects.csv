@@ -1,0 +1,6 @@
+Technical_Name,Description,Object_Type,InfoArea_Or_Package,Source_System,Observed_In_S21,Target_Recommendation
+ZSAM_SO_IA,Sales Order InfoArea,INFOAREA,Root,S21,Yes (RSA1),Datasphere Space: SALES_ANALYTICS
+ZSAM_SO01,Sales Order Header & Item ADSO,ADSO (Standard),ZSAM_SO_IA,2LIS_11_VAHDR / 2LIS_11_VAITM,Yes (RSA1),Local Table: LT_SALES_ORDER + Transformation Flow
+ZSAM_SO_CP,Sales Order CompositeProvider,COMPOSITE_PROVIDER,ZSAM_SO_IA,ZSAM_SO01 (Union/Join),Yes (RSA1),Analytic Model: AM_SALES_ORDER (Star Join)
+ZSAM_MM_PR,MM Purchase Requisition ADSO,ADSO (Standard),ZAIS_BW,2LIS_02_SCL,Yes (RSA1),Local Table: LT_PURCHASE_REQ + View: V_PURCHASE_REQ
+ZAIS_BW,BW Common Object InfoArea,INFOAREA,Root,S21,Yes (RSA1),Datasphere Space: PROCUREMENT_ANALYTICS

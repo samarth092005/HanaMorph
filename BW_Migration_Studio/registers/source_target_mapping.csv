@@ -1,0 +1,6 @@
+Source_BW_Object,Source_Type,Target_Datasphere_Object,Target_Type,Transformation_Rule,Complexity
+ZSAM_SO01,ADSO (Standard),LT_SALES_ORDER,Local Table,Direct schema mapping with HANA Cloud data types,Low
+ZSAM_SO_CP,CompositeProvider,AM_SALES_ORDER,Analytic Model,"Map dimensions, measures, and star join to customer dimension",Medium
+ZSAM_MM_PR,ADSO (Standard),LT_PURCHASE_REQ,Local Table,Field mapping + date conversion to TIMESTAMP,Low
+TR_SO_01,Transformation,TF_SALES_ORDER,Transformation Flow,Convert formula and rule groups into push-down SQL,Medium
+DTP_SO_01,DTP,RF_SALES_ORDER,Replication Flow,Configure delta load replication with ODP delta queue,Low

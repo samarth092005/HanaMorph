@@ -1,0 +1,5 @@
+Interface_ID,Source_System,Target_System,Protocol,Auth_Method,Direction,Read_Write,Safety_Boundary
+INT-01,S21 (SAP BW),HanaMorph Discovery Engine,RFC / OData / ADT,Basic / SNC (int_samarth),Inbound to Studio,Strict Read-Only,No modifying HTTP verbs; no DDIC locks
+INT-02,HanaMorph Backend,SAP Datasphere,REST / OData v4 / CLI,OAuth 2.0 Client Credentials,Outbound to Datasphere,Controlled Deploy,Requires explicit approval before deployment
+INT-03,HanaMorph Studio,Local Database,SQLite Driver,File I/O,Bidirectional,Read/Write,Isolated local storage only
+INT-04,SAP Datasphere,SAP Analytics Cloud (SAC),InA / OData v4,SAML 2.0 / OAuth,Outbound to SAC,Read-Only Consumption,Standard reporting layer

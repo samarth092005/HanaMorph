@@ -1,0 +1,8 @@
+Test_Case_ID,Requirement_ID,Test_Category,Test_Description,Expected_Result,Status
+TC-DISC-001,REQ-BW-001,Unit / Discovery,Verify S21 mock and live metadata parser extracts ADSOs and CompositeProviders,Correctly populates SourceCatalog with 5 objects,Ready to Execute
+TC-NORM-001,REQ-BW-002,Unit / Normalizer,Verify canonical normalizer converts BW types to Datasphere standard types,"CHAR->NVARCHAR, DATS->DATE, CURR->DECIMAL correctly mapped",Ready to Execute
+TC-ASSESS-001,REQ-BW-003,Unit / Assessment,Evaluate 4-way migration strategy for standard ADSO without custom ABAP,Scores Native Datasphere highest (score >= 85),Ready to Execute
+TC-LINEAGE-001,REQ-BW-004,Unit / Dependency,Detect circular dependencies and compute blast radius for ZSAM_SO01,Graph builds without cycles; downstream consumers correctly listed,Ready to Execute
+TC-GEN-001,REQ-BW-005,Unit / Generation,Generate valid CSN JSON payload for Analytic Model AM_SALES_ORDER,CSN payload conforms to SAP CSN v2.0 schema,Ready to Execute
+TC-SEC-001,REQ-SEC-001,Security,Assert that connector rejects mutating HTTP verbs (POST/PUT/DELETE) to S21,Throws SecurityViolationError with zero external network writes,Ready to Execute
+TC-API-001,REQ-NFR-001,Integration,Verify Studio backend health and discovery REST API responses,Returns HTTP 200 with serviceStatus: HEALTHY,Ready to Execute

@@ -1,0 +1,6 @@
+Risk_ID,Category,Description,Likelihood,Impact,Mitigation_Strategy,Owner,Status
+RSK-001,Security,Accidental modification of S21 repository via int_samarth admin user,Low,Critical,"Enforce strict read-only HTTP GET verbs, read-only ADT interfaces, and reject mutating requests",Solution Architect,Mitigated
+RSK-002,Technical,Complex ABAP routines in BW transformations cannot be mapped automatically to SQL,High,High,Flag ABAP routines for manual review; provide AMDP / SQLScript transformation templates,ABAP Lead,Open
+RSK-003,Integration,Datasphere CLI version mismatch with Node 20 environment,Medium,Medium,Pin @sap/datasphere-cli compatible release; provide direct REST/CSN fallbacks,Integration Architect,Mitigated
+RSK-004,Architecture,"Loss of reporting semantics (hierarchies, restricted key figures) during migration",Medium,High,"Model Analytic Models with explicit measures, variables, and dimension hierarchies",BW Architect,Open
+RSK-005,Operational,Large delta queues (ODQ) in S21 causing replication lag,Low,Medium,Utilize ODP delta queue monitoring (ODQMON) and staged Replication Flows,Data Engineer,Open

@@ -1,0 +1,10 @@
+ID,Category,Title,Description,Priority,Status,Acceptance_Criteria
+REQ-BW-001,Functional,S21 Read-Only Discovery,Discover SAP BW metadata from S21 (Client 200) via read-only interfaces without triggering locks or loads,Must Have,Approved,"System status, InfoAreas, ADSOs, and CompositeProviders cataloged without write operations"
+REQ-BW-002,Functional,Canonical Metadata Modeling,"Normalize diverse BW objects (ADSO, CP, Transformation, DTP) into target-agnostic schema",Must Have,Approved,All BW attributes mapped into JSON/CSN format with upstream and downstream lineage
+REQ-BW-003,Functional,Four-Way Migration Strategy Evaluation,"Evaluate native Datasphere, BW Bridge, BDC Data Product Generator, and Hybrid routes",Must Have,Approved,Objective scoring matrix produces evidence-based recommendation per object
+REQ-BW-004,Functional,Dependency & Blast Radius Analysis,Calculate upstream extractor dependencies and downstream reporting/SAC impact,Must Have,Approved,Lineage graph generated with cycle detection and consumer blast radius score
+REQ-BW-005,Functional,Deterministic Target Artifact Generation,"Generate Datasphere Local/Remote Tables, Views, Analytic Models, and CSN definitions",Must Have,Approved,CSN payload complies with Datasphere JSON schema and HANA Cloud SQL dialect
+REQ-SEC-001,Security,S21 Zero-Modification Boundary,"Prevent any create, update, delete, or activate operation in SAP S21",Must Have,Enforced,"Zero HTTP POST/PUT/DELETE, zero CTS transports, zero DDIC writes"
+REQ-SEC-002,Security,Credential Isolation,Keep real credentials out of Git and logs; use environment variables or OS credential manager,Must Have,Enforced,.env.example contains only placeholders; .gitignore blocks secret files
+REQ-NFR-001,Performance,Sub-second Local Metadata Retrieval,"Local metadata repository queries must return in under 500ms for 1,000 objects",Should Have,Approved,SQLite indexed queries benchmarked and passing in test suite
+REQ-NFR-002,Quality,Automated Test Coverage,"Unit, parser, assessment, and contract tests must cover all core migration logic",Must Have,Approved,Test suite passing with 100% assertions verified

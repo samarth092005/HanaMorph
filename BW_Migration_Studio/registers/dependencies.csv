@@ -1,0 +1,6 @@
+Source_Object,Source_Type,Dependent_Object,Dependent_Type,Dependency_Kind,Cardinality
+2LIS_11_VAHDR,DATASOURCE,ZSAM_SO01,ADSO,Extracts into,1:N
+2LIS_11_VAITM,DATASOURCE,ZSAM_SO01,ADSO,Extracts into,1:N
+ZSAM_SO01,ADSO,ZSAM_SO_CP,COMPOSITE_PROVIDER,Provides PartProvider to,1:1
+ZSAM_SO_CP,COMPOSITE_PROVIDER,ZSAM_SO_Q001,QUERY,Queried by,1:N
+2LIS_02_SCL,DATASOURCE,ZSAM_MM_PR,ADSO,Extracts into,1:1

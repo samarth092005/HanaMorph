@@ -1,0 +1,5 @@
+ID,Category,Assumption_Description,Validation_Method,Impact_If_Invalid
+ASM-001,Source Landscape,S21 is an SAP NetWeaver 7.5 / BW 7.5 or BW/4HANA system on HANA DB,Verify via SAP GUI System Status & installed software components,Architecture must adapt to classical vs modern BW metadata schemas
+ASM-002,Target Architecture,SAP Datasphere tenant is available with Spaces configured for analytical modeling,Check Datasphere space permissions and user roles,Requires manual space provisioning before artifact import
+ASM-003,Connectivity,SAP GUI and Eclipse BW Modeling Tools are accessible locally on Windows host,Audit local file paths and registry entries,Fall back to offline metadata fixtures and XML/JSON parsers
+ASM-004,Security,"All S21 read operations can be performed with standard authorization profiles (S_RS_COMP, S_TABU_DIS)",Test metadata read commands against sample InfoArea,Request explicit basis security role adjustment if authorization fails

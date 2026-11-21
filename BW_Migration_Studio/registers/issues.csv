@@ -1,0 +1,4 @@
+Issue_ID,Title,Severity,Description,Resolution_Path,Status
+ISS-001,Node 20 vs Global @sap/cds v10 mismatch,Medium,Global cds CLI requires Node >=22.12; host is Node 20.18.0,Pin @sap/cds ^9.9.4 in local package.json or use standalone Node service runner,Resolved
+ISS-002,GitHub API Rate Limiting on unauthenticated calls,Low,Unauthenticated HTTP requests from local IP exceed rate limit,Utilize local repository references and authenticated git operations,Resolved
+ISS-003,Missing Docker Daemon on Windows host,Low,Docker CLI is present but daemon is not running natively,Use native Windows Node/Python environment with SQLite persistence,Resolved

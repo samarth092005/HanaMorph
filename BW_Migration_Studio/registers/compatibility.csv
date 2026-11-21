@@ -1,0 +1,6 @@
+BW_Feature,Supported_In_Datasphere_Native,Supported_In_BW_Bridge,Supported_In_BDC_Data_Product,Notes
+Standard ADSO,Yes (Local Table + TF),Yes (Native ADSO),Yes (Data Subscription),Direct schema mapping supported across all routes
+CompositeProvider Join,Yes (Graphical/SQL View),Yes (CompositeProvider),Yes (Curated Product),Star joins best mapped to Analytic Models
+ABAP Routine (Field/Start/End),No (Requires SQLScript),Yes (ABAP on BTP),Partial (SQL transformations),Must be refactored to declarative SQL for native route
+ODP Delta Extraction,Yes (Replication Flow),Yes (ODP Source),Yes (Inbound Buffer),Requires ODQMON delta queue active in source S21
+"BW Hierarchy (GL, Cost Center)",Yes (Datasphere Hierarchy),Yes (Hierarchy InfoObject),Yes (Hierarchical Dimension),Parent-child and level hierarchies supported
