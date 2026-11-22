@@ -9,8 +9,13 @@
 *.crt
 *.pfx
 *.keystore
+*.secret
+*.token
+.master_key
+.api_key*
 secrets/
 datasphere-secrets.json
+*service-key*.json
 *credentials*
 *password*
 
@@ -64,6 +69,7 @@ out.log
 evidence/raw_exports/
 *.dmp
 *.bak
+*.m4_1_backup
 
 # IDE & OS
 .vscode/
@@ -76,3 +82,9 @@ Desktop.ini
 
 # Scratchpads
 scratch/
+
+# Generated runtime and test outputs
+output/
+delivery/
+BW_Migration_Studio/output/
+BW_Migration_Studio/delivery/

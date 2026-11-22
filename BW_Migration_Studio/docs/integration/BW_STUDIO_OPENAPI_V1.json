@@ -1,0 +1,417 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "HANAMORPH BW Migration & Modernization Studio API",
+    "version": "1.0.0",
+    "description": "Standardized REST API for SAP BW Discovery, Modernization Intelligence, Artifact Generation, Packaging, and Runbooks.",
+    "contact": {
+      "name": "HANAMORPH Architecture Team"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:4004",
+      "description": "Local Standalone Studio Daemon"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "System Health & Liveness Probe",
+        "description": "Public health check endpoint returning server status, SAP safety guardrails, and version.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "System is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/overview": {
+      "get": {
+        "summary": "Executive Dashboard Overview",
+        "description": "Returns counts of source objects, dependencies, plans, validation runs, and target routes.",
+        "responses": {
+          "200": {
+            "description": "Overview metrics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OverviewResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/connections": {
+      "get": {
+        "summary": "List Configured Connections",
+        "responses": {
+          "200": {
+            "description": "List of connection statuses"
+          }
+        }
+      }
+    },
+    "/api/connections/test": {
+      "post": {
+        "summary": "Test SAP or Target Connections",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "systemId": { "type": "string", "default": "all" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Connection test results"
+          }
+        }
+      }
+    },
+    "/api/catalog": {
+      "get": {
+        "summary": "List Discovered BW Objects",
+        "responses": {
+          "200": {
+            "description": "Array of discovered BW objects"
+          }
+        }
+      }
+    },
+    "/api/discovery/object/{name}": {
+      "get": {
+        "summary": "Get Object DDIC Details and Fields",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Object metadata and field definitions"
+          },
+          "404": {
+            "description": "Object not found"
+          }
+        }
+      }
+    },
+    "/api/discovery/lineage": {
+      "get": {
+        "summary": "Get End-to-End Topological Lineage Graph",
+        "responses": {
+          "200": {
+            "description": "Nodes and edges of the metadata dependency graph"
+          }
+        }
+      }
+    },
+    "/api/assessment/summary": {
+      "get": {
+        "summary": "Get Modernization Assessment Summary",
+        "responses": {
+          "200": {
+            "description": "Complexity, risk, and feasibility breakdown"
+          }
+        }
+      }
+    },
+    "/api/assess": {
+      "post": {
+        "summary": "Assess Object or Trigger Assessment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "objectName": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assessment finding and target recommendation"
+          }
+        }
+      }
+    },
+    "/api/intelligence/landscape": {
+      "get": {
+        "summary": "Landscape Modernization Intelligence & Effort",
+        "responses": {
+          "200": {
+            "description": "Detailed landscape distributions and effort estimates"
+          }
+        }
+      }
+    },
+    "/api/planning/projects": {
+      "get": {
+        "summary": "List Migration Projects",
+        "responses": {
+          "200": {
+            "description": "List of projects"
+          }
+        }
+      }
+    },
+    "/api/planning/project": {
+      "post": {
+        "summary": "Create Migration Project",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "targetSpace": { "type": "string", "default": "SALES_ANALYTICS" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created project"
+          }
+        }
+      }
+    },
+    "/api/generate": {
+      "post": {
+        "summary": "Generate Modernization Artifacts",
+        "description": "Generates CSN, SQL DDL, Replication Flow, or SAC models.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "planId": { "type": "string" },
+                  "objectName": { "type": "string" },
+                  "targetSpace": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated artifacts"
+          }
+        }
+      }
+    },
+    "/api/validation/run": {
+      "post": {
+        "summary": "Execute 7-Level Validation Run",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projectId", "planId"],
+                "properties": {
+                  "projectId": { "type": "string" },
+                  "planId": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation result report"
+          }
+        }
+      }
+    },
+    "/api/delivery/package": {
+      "post": {
+        "summary": "Create Sealed Delivery Package",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["projectId", "planId"],
+                "properties": {
+                  "projectId": { "type": "string" },
+                  "planId": { "type": "string" },
+                  "version": { "type": "string", "default": "1.0.0" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created package metadata with master SHA-256"
+          }
+        }
+      }
+    },
+    "/api/runbook/{planId}": {
+      "get": {
+        "summary": "Generate Multi-Phase Deployment Runbook",
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runbook specification in Markdown and JSON"
+          }
+        }
+      }
+    },
+    "/api/jobs/submit": {
+      "post": {
+        "summary": "Submit Asynchronous Background Job",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["jobType"],
+                "properties": {
+                  "jobType": { "type": "string" },
+                  "payload": { "type": "object" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Job submission confirmation with jobId"
+          }
+        }
+      }
+    },
+    "/api/jobs": {
+      "get": {
+        "summary": "List Background Jobs",
+        "responses": {
+          "200": {
+            "description": "List of active and historical background jobs"
+          }
+        }
+      }
+    },
+    "/api/jobs/{id}": {
+      "get": {
+        "summary": "Get Background Job Status and Result",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job details, progress, and result"
+          },
+          "404": {
+            "description": "Job not found"
+          }
+        }
+      }
+    },
+    "/api/admin/backup": {
+      "post": {
+        "summary": "Trigger Atomic SQLite Hot Backup",
+        "responses": {
+          "200": {
+            "description": "Backup created and integrity verified"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "Constant-time HMAC authenticated API key (or 'Authorization: Bearer <key>')"
+      }
+    },
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "service": { "type": "string" },
+          "status": { "type": "string" },
+          "version": { "type": "string" },
+          "sapSafety": { "type": "string" },
+          "s21Protection": { "type": "string" },
+          "authMode": { "type": "string" },
+          "timestamp": { "type": "string" }
+        }
+      },
+      "OverviewResponse": {
+        "type": "object",
+        "properties": {
+          "totalSourceObjects": { "type": "integer" },
+          "totalDependencies": { "type": "integer" },
+          "configuredConnections": { "type": "integer" },
+          "totalProjects": { "type": "integer" },
+          "totalPlans": { "type": "integer" },
+          "totalValidationRuns": { "type": "integer" },
+          "totalDeliveryPackages": { "type": "integer" },
+          "s21Inspection": { "type": "string" },
+          "supportedTargetRoutes": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

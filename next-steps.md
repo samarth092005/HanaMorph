@@ -1,27 +1,32 @@
 # HanaMorph Recommended Next Steps
 
-## 1. Immediate Next Step (Phase 1 Inception)
-Before writing application code, use the installed `spec-driven-development` skill to draft the formal HanaMorph Technical Specification & Capability Map:
-- Define the metadata schema for SAP BW extractors (ADSOs, Transformations, CompositeProviders).
-- Define the schema for target SAP Datasphere objects (Tables, SQL Views, Analytic Models).
-- Specify the candidate generation blocking key algorithms.
+## 1. Operational Studio Execution
+The BW Migration & Modernization Studio is fully remediated, verified, and re-accepted:
+- **Web UI**: Run `python backend/server.py` inside `BW_Migration_Studio/bw-studio` and open `http://localhost:4004`.
+- **Workflow Journey**:
+  1. *Overview*: Inspect discovery, planning, and validation KPIs.
+  2. *Discovery*: Trigger live S21 extraction and inspect object field schemas (now with versioned snapshot history).
+  3. *Assessment*: Review 5-dimensional weighted scores, decoupled metadata completeness confidence, and 4-tier risk classification (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`).
+  4. *Migration Plan*: Review topological sequence (0 cycles) and sign off with approval.
+  5. *Generation*: Review generated CSN v2.0 JSON (entities vs views), HANA Cloud DDL (`CREATE COLUMN TABLE` vs `CREATE VIEW`), and mapping specs.
+  6. *Validation*: View 7-level verification results with real Level 5 referential currency/unit integrity checks.
+  7. *Delivery*: View sealed delivery packages containing dry-run deployment templates (`deploy_datasphere.sh`, `deploy_hana.sql`, `DEPLOYMENT_GUIDE.md`) and complete `manifest.json`.
+  8. *Connections*: Test and monitor multi-target system health.
 
-## 2. Subsequent Milestones
-1. **Milestone 1: Project Scaffolding & Virtual Environment Setup**:
-   - Initialize Python virtual environment with dependency pinning (`requirements.txt` / `pyproject.toml`).
-   - Configure pytest suite using `test-driven-development` skill.
-2. **Milestone 2: Deterministic Metadata Ingestion Engine**:
-   - Build read-only offline mock data fixtures representing S21 BW objects and Datasphere spaces.
-   - Implement data ingestion parsers with strict type safety.
-3. **Milestone 3: Multi-Factor Scoring & Lineage Graph**:
-   - Implement Jaccard similarity, string distance, and graph dependency intersection algorithms.
-   - Run `agentic-verification` to inject mutants and verify test suite fault detection.
-4. **Milestone 4: Blast Radius & Impact Analysis**:
-   - Integrate `what-could-break` patterns into operational risk scoring.
-5. **Milestone 5: Controlled Action Planner & Tamper-Evident Audit Trail**:
-   - Implement SHA-256 event log chain and human-in-the-loop review approvals.
+## 2. Optional Target Cloud Provisioning (When Ready)
+To execute dry-run deployments to remote SAP cloud tenants:
+- **Datasphere Space**: Provision space `SALES_ANALYTICS` in target Datasphere tenant.
+- **Datasphere OAuth**: Populate `DATASPHERE_OAUTH_CLIENT_ID` and `DATASPHERE_OAUTH_CLIENT_SECRET` in `.env`.
+- **HANA Cloud**: Add target instance URI in `.env` for direct DDL execution.
+- **Dry-Run Command**:
+  ```bash
+  cd BW_Migration_Studio/delivery/<project_id>/v<version>/deployment
+  bash deploy_datasphere.sh
+  ```
 
-## 3. Pre-Flight Checklist Before Resuming Work
-- [ ] Review `current-state.md` and `decisions.md`.
-- [ ] Invoke `context-engineering` if entering complex subtasks to maintain token budget.
-- [ ] Ensure any future MCP integration with Datasphere strictly restricts write permissions.
+## 3. Automated Test Suite Execution
+To run regression verification at any time:
+```powershell
+python BW_Migration_Studio/bw-studio/tests/run_all_tests.py
+```
+*(Runs all 43 unit, integration, live server, and defect remediation tests).*

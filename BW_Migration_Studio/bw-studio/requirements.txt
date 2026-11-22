@@ -1,0 +1,10 @@
+# HANAMORPH BW Migration & Modernization Studio
+# Runtime Dependencies
+# Python >= 3.10 required
+
+# Core Cryptography & Secure Vault (AES-256-GCM / PBKDF2)
+cryptography>=42.0.0
+
+# Optional: SAP NetWeaver RFC Connector
+# Requires SAP NetWeaver RFC SDK 7.50+ installed on host
+# pyrfc>=3.3.0

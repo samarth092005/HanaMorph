@@ -31,5 +31,31 @@ class TestGenerationEngine(unittest.TestCase):
         self.assertTrue(ddl.startswith("CREATE COLUMN TABLE"))
         self.assertIn("PRIMARY KEY", ddl)
 
+    def test_view_csn_and_ddl_generation(self):
+        import sys, os
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from generation_engine.csn_generator import DatasphereCSNGenerator
+        from generation_engine.hana_ddl_generator import HANASQLGenerator
+
+        csn_gen = DatasphereCSNGenerator()
+        ddl_gen = HANASQLGenerator()
+
+        fields = [
+            {"field_name": "ORDER_ID", "data_type": "CHAR", "length": 10, "is_key": 1},
+            {"field_name": "NET_VALUE", "data_type": "CURR", "length": 15, "decimals": 2}
+        ]
+
+        # View CSN
+        view_csn = csn_gen.generate_view_csn("SALES_SPACE", "AM_ZSAM_SO_CP", "LT_ZSAM_SO01", fields)
+        def_key = "SALES_SPACE.AM_ZSAM_SO_CP"
+        self.assertIn(def_key, view_csn["definitions"])
+        self.assertEqual(view_csn["definitions"][def_key]["kind"], "view")
+        self.assertEqual(view_csn["definitions"][def_key]["query"]["from"], "SALES_SPACE.LT_ZSAM_SO01")
+
+        # View DDL
+        view_ddl = ddl_gen.generate_sql_view_ddl("SALES_SPACE", "AM_ZSAM_SO_CP", "LT_ZSAM_SO01", fields)
+        self.assertTrue(view_ddl.startswith('CREATE VIEW "SALES_SPACE"."AM_ZSAM_SO_CP" AS'))
+        self.assertIn('FROM "SALES_SPACE"."LT_ZSAM_SO01"', view_ddl)
+
 if __name__ == "__main__":
     unittest.main()
